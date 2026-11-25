@@ -45,22 +45,77 @@ include __DIR__ . '/../includes/auth_header.php';
 ?>
 <h2 class="h4 fw-bold mb-3">Create a student account</h2>
 <?php if ($errors): ?><div class="alert alert-danger py-2"><ul class="mb-0 ps-3"><?php foreach ($errors as $er) echo '<li>' . e($er) . '</li>'; ?></ul></div><?php endif; ?>
-<form method="post" enctype="multipart/form-data" class="row g-3"><?= csrf_field() ?>
+
+<form method="post" enctype="multipart/form-data" class="row g-3"
+      style="background-color: #ffe5e5; padding: 25px; border-radius: 12px;">
+<?= csrf_field() ?>
+
 <?php
-$fields = [['student_id','Student ID',6],['email','Email Address',6,'email'],['first_name','First Name',4],['middle_name','Middle Name',4],['last_name','Last Name',4],
- ['username','Username',6],['course','Course/Program',6],['year_level','Year Level',6],['section','Section',6]];
-foreach ($fields as $f): [$n,$l,$c] = $f; $t = $f[3] ?? 'text'; ?>
-  <div class="col-md-<?= $c ?>"><label class="form-label"><?= $l ?></label>
-  <input type="<?= $t ?>" name="<?= $n ?>" class="form-control" value="<?= e($old[$n] ?? '') ?>" <?= $n==='middle_name'?'':'required' ?>></div>
+$fields = [
+    ['student_id','Student ID',6],
+    ['email','Email Address',6,'email'],
+    ['first_name','First Name',4],
+    ['middle_name','Middle Name',4],
+    ['last_name','Last Name',4],
+    ['username','Username',6],
+    ['course','Course/Program',6],
+    ['year_level','Year Level',6],
+    ['section','Section',6]
+];
+
+foreach ($fields as $f):
+    [$n,$l,$c] = $f;
+    $t = $f[3] ?? 'text';
+?>
+    <div class="col-md-<?= $c ?>">
+        <label class="form-label" style="color: #cc0000; font-weight: bold;">
+            <?= $l ?>
+        </label>
+        <input type="<?= $t ?>" name="<?= $n ?>"
+               class="form-control"
+               style="border: 1px solid #cc0000;"
+               value="<?= e($old[$n] ?? '') ?>"
+               <?= $n==='middle_name'?'':'required' ?>>
+    </div>
 <?php endforeach; ?>
+
 <?php foreach (['password'=>'Password','confirm_password'=>'Confirm Password'] as $n=>$l): ?>
-  <div class="col-md-6"><label class="form-label"><?= $l ?></label><div class="input-group">
-  <input type="password" name="<?= $n ?>" class="form-control" required>
-  <button type="button" class="btn btn-outline-secondary toggle-pw" tabindex="-1"><i class="fa fa-eye"></i></button></div></div>
+    <div class="col-md-6">
+        <label class="form-label" style="color: #cc0000; font-weight: bold;">
+            <?= $l ?>
+        </label>
+        <div class="input-group">
+            <input type="password" name="<?= $n ?>"
+                   class="form-control"
+                   style="border: 1px solid #cc0000;"
+                   required>
+            <button type="button" class="btn toggle-pw"
+                    style="background-color: #cc0000; color: white;"
+                    tabindex="-1">
+                <i class="fa fa-eye"></i>
+            </button>
+        </div>
+    </div>
 <?php endforeach; ?>
-<div class="col-12"><label class="form-label">Profile Picture (optional, JPG/PNG/WEBP, max 2 MB)</label>
-  <input type="file" name="profile_picture" class="form-control" accept=".jpg,.jpeg,.png,.webp"></div>
-<div class="col-12"><button class="btn btn-primary btn-lg w-100">Register</button></div>
+
+<div class="col-12">
+    <label class="form-label" style="color: #cc0000; font-weight: bold;">
+        Profile Picture (optional, JPG/PNG/WEBP, max 2 MB)
+    </label>
+    <input type="file" name="profile_picture"
+           class="form-control"
+           style="border: 1px solid #cc0000;"
+           accept=".jpg,.jpeg,.png,.webp">
+</div>
+
+<div class="col-12">
+    <button class="btn btn-lg w-100"
+            style="background-color: #cc0000; color: white; border: none;">
+        Register
+    </button>
+</div>
+
 </form>
+
 <p class="text-center mt-3 mb-0">Already registered? <a href="<?= url('auth/login.php') ?>">Sign in</a></p>
 <?php include __DIR__ . '/../includes/auth_footer.php'; ?>
