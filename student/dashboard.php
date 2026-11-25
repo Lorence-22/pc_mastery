@@ -44,20 +44,69 @@ include __DIR__ . '/../includes/header.php';
   <div class="col-6 col-md-4 col-xl-2"><a class="btn btn-outline-<?= $c ?> w-100 py-3" href="<?= url($h) ?>"><i class="fa <?= $i ?> d-block mb-1 fs-5"></i><?= $l ?></a></div>
 <?php endforeach; ?>
 </div>
+
 <div class="row g-3">
-  <div class="col-lg-6"><div class="card p-3 h-100"><h6>Recommended Learning</h6>
-  <?php if (!$recommended): ?><div class="empty-state"><i class="fa fa-trophy"></i><p>You have studied every component. Try the assembly assessment.</p></div><?php endif; ?>
-  <?php foreach ($recommended as $r): ?>
-    <a href="<?= url('student/lessons/view.php?id=' . $r['id']) ?>" class="rec-item"><i class="fa <?= e($r['icon'] ?: 'fa-microchip') ?>"></i>
-    <div><strong><?= e($r['name']) ?></strong><small class="d-block text-muted"><?= e(mb_strimwidth($r['description'], 0, 70, '...')) ?></small></div></a>
-  <?php endforeach; ?></div></div>
-  <div class="col-lg-6"><div class="card p-3 h-100"><h6>Recent Activity</h6>
-  <?php if (!$recent): ?><div class="empty-state"><i class="fa fa-clock"></i><p>No activity yet.</p></div><?php endif; ?>
-  <ul class="list-unstyled mb-0"><?php foreach ($recent as $r): ?>
-    <li class="d-flex justify-content-between border-bottom py-1"><span><span class="badge text-bg-light"><?= e($r['k']) ?></span> <?= e($r['t']) ?></span><small class="text-muted"><?= e(date('M j', strtotime($r['d']))) ?></small></li>
-  <?php endforeach; ?></ul>
-  <?php if ($ann): ?><h6 class="mt-3">Announcements</h6><?php foreach ($ann as $a): ?>
-    <div class="alert alert-info py-2 mb-2"><strong><?= e($a['title']) ?></strong><div class="small"><?= e($a['body']) ?></div></div><?php endforeach; endif; ?>
-  </div></div>
+  <div class="col-lg-6">
+    <div class="card p-3 h-100" style="background-color: #dc3545; color: white;">
+      <h6>Recommended Learning</h6>
+
+      <?php if (!$recommended): ?>
+        <div class="empty-state">
+          <i class="fa fa-trophy"></i>
+          <p>You have studied every component. Try the assembly assessment.</p>
+        </div>
+      <?php endif; ?>
+
+      <?php foreach ($recommended as $r): ?>
+        <a href="<?= url('student/lessons/view.php?id=' . $r['id']) ?>" class="rec-item" style="color: white;">
+          <i class="fa <?= e($r['icon'] ?: 'fa-microchip') ?>"></i>
+          <div>
+            <strong><?= e($r['name']) ?></strong>
+            <small class="d-block" style="color: #f8d7da;">
+              <?= e(mb_strimwidth($r['description'], 0, 70, '...')) ?>
+            </small>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card p-3 h-100" style="background-color: #dc3545; color: white;">
+      <h6>Recent Activity</h6>
+
+      <?php if (!$recent): ?>
+        <div class="empty-state">
+          <i class="fa fa-clock"></i>
+          <p>No activity yet.</p>
+        </div>
+      <?php endif; ?>
+
+      <ul class="list-unstyled mb-0">
+        <?php foreach ($recent as $r): ?>
+          <li class="d-flex justify-content-between border-bottom py-1">
+            <span>
+              <span class="badge text-bg-light"><?= e($r['k']) ?></span>
+              <?= e($r['t']) ?>
+            </span>
+            <small style="color: #f8d7da;">
+              <?= e(date('M j', strtotime($r['d']))) ?>
+            </small>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+
+      <?php if ($ann): ?>
+        <h6 class="mt-3">Announcements</h6>
+        <?php foreach ($ann as $a): ?>
+          <div class="alert alert-light py-2 mb-2">
+            <strong><?= e($a['title']) ?></strong>
+            <div class="small"><?= e($a['body']) ?></div>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </div>
+  </div>
 </div>
+
 <?php include __DIR__ . '/../includes/footer.php'; ?>
